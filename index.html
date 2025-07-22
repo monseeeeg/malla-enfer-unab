@@ -1,132 +1,297 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Ramos Enfermería UNAB</title>
+  <meta charset="UTF-8" />
+  <title>Malla Enfermería UNAB</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      padding: 30px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fceaff;
+      padding: 20px;
       color: #333;
     }
-    h1, h2, h3 {
-      color: #2c3e50;
-    }
-    ul {
-      background-color: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      list-style: none;
-      margin-bottom: 30px;
-    }
-    li {
-      margin-bottom: 8px;
-    }
-    .año {
+
+    h1 {
+      text-align: center;
+      color: #7c4d8a;
       margin-bottom: 40px;
+    }
+
+    .semestre {
+      margin-bottom: 40px;
+    }
+
+    .semestre h2 {
+      color: #b75d9f;
+      margin-bottom: 15px;
+    }
+
+    .ramos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .ramo {
+      background-color: #f9e0f7;
+      border: 2px solid #f0bde2;
+      padding: 12px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 240px;
+      transition: 0.2s;
+      position: relative;
+    }
+
+    .ramo:hover {
+      box-shadow: 0 0 10px #e4acd8;
+    }
+
+    .ramo.bloqueado {
+      background-color: #e4d5e8;
+      border: 2px dashed #c3b3c9;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .ramo.aprobado {
+      background-color: #d4f8e8;
+      border: 2px solid #85e1c2;
+    }
+
+    .tooltip {
+      font-size: 12px;
+      color: #555;
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
 
-  <h1>Ramos de Enfermería UNAB</h1>
+  <h1>Malla Interactiva - Enfermería UNAB</h1>
 
-  <div class="año">
-    <h2>Primer Año</h2>
-    <h3>Semestre 1</h3>
-    <ul>
-      <li>Morfología Integral</li>
-      <li>Química General y Orgánica</li>
-      <li>Biología Celular</li>
-      <li>Razonamiento Matemático</li>
-      <li>Bases Teóricas de la Enfermería</li>
-    </ul>
-    <h3>Semestre 2</h3>
-    <ul>
-      <li>Microbiología</li>
-      <li>Bioquímica</li>
-      <li>Socioantropología</li>
-      <li>Psicología Evolutiva</li>
-      <li>Bases del Cuidado de Enfermería</li>
-      <li>Habilidades Comunicativas</li>
-    </ul>
-  </div>
+  <div id="malla-container"></div>
 
-  <div class="año">
-    <h2>Segundo Año</h2>
-    <h3>Semestre 3</h3>
-    <ul>
-      <li>Fisiología</li>
-      <li>Salud Pública 1</li>
-      <li>Enfermería en la Promoción y Prevención en Salud</li>
-      <li>Cuidado de Enfermería en el Ciclo Vital</li>
-      <li>Inglés 1</li>
-    </ul>
-    <h3>Semestre 4</h3>
-    <ul>
-      <li>Fisiopatología</li>
-      <li>Farmacología General</li>
-      <li>Salud Pública 2</li>
-      <li>Bases de Enfermería en Salud Familiar y Comunitaria</li>
-      <li>Cuidado de Enfermería en Adulto y Adulto Mayor</li>
-      <li>Inglés 2</li>
-    </ul>
-  </div>
+  <script>
+    const malla = [
+      {
+        semestre: "1er Año - Semestre 1",
+        ramos: [
+          "Morfología Integral",
+          "Química General y Orgánica",
+          "Biología Celular",
+          "Razonamiento Matemático",
+          "Bases Teóricas de la Enfermería"
+        ]
+      },
+      {
+        semestre: "1er Año - Semestre 2",
+        ramos: [
+          "Microbiología",
+          "Bioquímica",
+          "Socioantropologia",
+          "Psicología Evolutiva",
+          "Bases del Cuidado de Enfermería",
+          "Habilidades Comunicativas"
+        ]
+      },
+      {
+        semestre: "2do Año - Semestre 1",
+        ramos: [
+          "Fisiología",
+          "Salud Publica 1",
+          "Enfermería en la Promoción y Prevención en Salud",
+          "Cuidado de Enfermería en el Ciclo Vital",
+          "Ingles 1"
+        ]
+      },
+      {
+        semestre: "2do Año - Semestre 2",
+        ramos: [
+          "Fisiopatología",
+          "Farmacología General",
+          "Salud Publica 2",
+          "Bases de Enfermería en Salud Familiar y Comunitaria",
+          "Cuidado de Enfermería en Adulto y Adulto Mayor",
+          "Ingles 2"
+        ]
+      },
+      {
+        semestre: "3er Año - Semestre 1",
+        ramos: [
+          "Farmacología Clínica y Farmacovigilancia",
+          "Cuidados de Enfermería en Salud Familiar",
+          "Cuidados de Enfermería en el Niño y Adulto",
+          "Fundamentos de Gestión y Liderazgo en Enfermeria",
+          "Integrador 1: Cuidados de Enfermería 1",
+          "Ingles 3"
+        ]
+      },
+      {
+        semestre: "3er Año - Semestre 2",
+        ramos: [
+          "Cuidado de Enfermería en Salud Mental y Comunidad",
+          "Cuidado de Enfermería en el Adulto y Adulto Mayor con Alteraciones de Salud",
+          "Métodos de Análisis en Enfermeria",
+          "Administración en Unidades de Enfermeria",
+          "Ingles 4",
+          "Razonamiento Científico y TICS"
+        ]
+      },
+      {
+        semestre: "4to Año - Semestre 1",
+        ramos: [
+          "Ética y Legislación en Enfermeria",
+          "Cuidados de Enfermería en Salud Familiar y Comunitaria",
+          "Cuidados de Enfermería en el Niño y Adolescente con Alteraciones en Salud",
+          "Desarrollo de Proyectos en Enfermeria",
+          "Pensamiento Critico"
+        ]
+      },
+      {
+        semestre: "4to Año - Semestre 2",
+        ramos: [
+          "Cuidado Integral del Niño y Adulto",
+          "Seminario de Investigación en Enfermeria",
+          "Integrador 2: Cuidado de Enfermería 2",
+          "Responsabilidad Social"
+        ]
+      },
+      {
+        semestre: "5to Año - Semestre 1",
+        ramos: [
+          "Integrador 3: Gestión del Cuidado en Unidades de Enfermeria"
+        ]
+      },
+      {
+        semestre: "5to Año - Semestre 2",
+        ramos: [
+          "Integrador 4: Gestión del Cuidado en Salud Familiar y Comunitaria"
+        ]
+      }
+    ];
 
-  <div class="año">
-    <h2>Tercer Año</h2>
-    <h3>Semestre 5</h3>
-    <ul>
-      <li>Farmacología Clínica y Farmacovigilancia</li>
-      <li>Cuidados de Enfermería en Salud Familiar</li>
-      <li>Cuidados de Enfermería en el Niño y Adulto</li>
-      <li>Fundamentos de Gestión y Liderazgo en Enfermería</li>
-      <li>Integrador 1: Cuidados de Enfermería 1</li>
-      <li>Inglés 3</li>
-    </ul>
-    <h3>Semestre 6</h3>
-    <ul>
-      <li>Cuidado de Enfermería en Salud Mental y Comunidad</li>
-      <li>Cuidado de Enfermería en el Adulto y Adulto Mayor con Alteraciones de Salud</li>
-      <li>Métodos de Análisis en Enfermería</li>
-      <li>Administración en Unidades de Enfermería</li>
-      <li>Inglés 4</li>
-      <li>Razonamiento Científico y TICS</li>
-    </ul>
-  </div>
+    const prerrequisitos = {
+      "Microbiología": ["Biología Celular"],
+      "Bioquímica": ["Química General y Orgánica"],
+      "Bases del Cuidado de Enfermería": ["Bases Teóricas de la Enfermería"],
+      "Fisiología": ["Morfología Integral"],
+      "Salud Publica 1": ["Razonamiento Matemático"],
+      "Enfermería en la Promoción y Prevención en Salud": ["Bases Teóricas de la Enfermería", "Socioantropologia"],
+      "Cuidado de Enfermería en el Ciclo Vital": ["Psicología Evolutiva"],
+      "Fisiopatología": ["Fisiología"],
+      "Farmacología General": ["Microbiología", "Bioquímica"],
+      "Salud Publica 2": ["Salud Publica 1", "Enfermería en la Promoción y Prevención en Salud"],
+      "Bases de Enfermería en Salud Familiar y Comunitaria": ["Enfermería en la Promoción y Prevención en Salud"],
+      "Cuidado de Enfermería en Adulto y Adulto Mayor": ["Cuidado de Enfermería en el Ciclo Vital"],
+      "Ingles 2": ["Ingles 1"],
+      "Farmacología Clínica y Farmacovigilancia": ["Farmacología General", "Fisiopatología"],
+      "Cuidados de Enfermería en Salud Familiar": ["Salud Publica 2", "Bases de Enfermería en Salud Familiar y Comunitaria"],
+      "Cuidados de Enfermería en el Niño y Adulto": ["Fisiopatología", "Cuidado de Enfermería en Adulto y Adulto Mayor"],
+      "Fundamentos de Gestión y Liderazgo en Enfermeria": ["Salud Publica 2"],
+      "Integrador 1: Cuidados de Enfermería 1": [
+        "Habilidades Comunicativas",
+        "Cuidado de Enfermería en Adulto y Adulto Mayor",
+        "Bases de Enfermería en Salud Familiar y Comunitaria",
+        "Salud Publica 2",
+        "Farmacología General",
+        "Fisiopatología"
+      ],
+      "Ingles 3": ["Ingles 2"],
+      "Cuidado de Enfermería en Salud Mental y Comunidad": ["Cuidados de Enfermería en Salud Familiar", "Integrador 1: Cuidados de Enfermería 1"],
+      "Cuidado de Enfermería en el Adulto y Adulto Mayor con Alteraciones de Salud": ["Integrador 1: Cuidados de Enfermería 1"],
+      "Métodos de Análisis en Enfermeria": ["Fundamentos de Gestión y Liderazgo en Enfermeria", "Cuidado de Enfermería en Adulto y Adulto Mayor"],
+      "Administración en Unidades de Enfermeria": ["Fundamentos de Gestión y Liderazgo en Enfermeria"],
+      "Ingles 4": ["Ingles 3"],
+      "Razonamiento Científico y TICS": ["Habilidades Comunicativas"],
+      "Ética y Legislación en Enfermeria": ["Integrador 1: Cuidados de Enfermería 1"],
+      "Cuidados de Enfermería en Salud Familiar y Comunitaria": ["Cuidado de Enfermería en Salud Mental y Comunidad"],
+      "Cuidados de Enfermería en el Niño y Adolescente con Alteraciones en Salud": ["Cuidados de Enfermería en el Niño y Adulto", "Integrador 1: Cuidados de Enfermería 1"],
+      "Desarrollo de Proyectos en Enfermeria": ["Administración en Unidades de Enfermeria"],
+      "Pensamiento Critico": ["Razonamiento Científico y TICS"],
+      "Cuidado Integral del Niño y Adulto": [
+        "Ética y Legislación en Enfermeria",
+        "Cuidado de Enfermería en el Adulto y Adulto Mayor con Alteraciones de Salud",
+        "Cuidados de Enfermería en el Niño y Adolescente con Alteraciones en Salud"
+      ],
+      "Seminario de Investigación en Enfermeria": ["Ingles 4", "Métodos de Análisis en Enfermeria", "Ética y Legislación en Enfermeria"],
+      "Integrador 2: Cuidado de Enfermería 2": [
+        "Ética y Legislación en Enfermeria",
+        "Cuidados de Enfermería en Salud Familiar y Comunitaria",
+        "Cuidado de Enfermería en el Adulto y Adulto Mayor con Alteraciones de Salud",
+        "Cuidados de Enfermería en el Niño y Adolescente con Alteraciones en Salud",
+        "Desarrollo de Proyectos en Enfermeria"
+      ],
+      "Responsabilidad Social": ["Pensamiento Critico"],
+      "Integrador 3: Gestión del Cuidado en Unidades de Enfermeria": [
+        "Cuidado Integral del Niño y Adulto",
+        "Seminario de Investigación en Enfermeria",
+        "Integrador 2: Cuidado de Enfermería 2",
+        "Responsabilidad Social"
+      ],
+      "Integrador 4: Gestión del Cuidado en Salud Familiar y Comunitaria": [
+        "Cuidado Integral del Niño y Adulto",
+        "Seminario de Investigación en Enfermeria",
+        "Integrador 2: Cuidado de Enfermería 2",
+        "Responsabilidad Social"
+      ]
+    };
 
-  <div class="año">
-    <h2>Cuarto Año</h2>
-    <h3>Semestre 7</h3>
-    <ul>
-      <li>Ética y Legislación en Enfermería</li>
-      <li>Cuidados de Enfermería en Salud Familiar y Comunitaria</li>
-      <li>Cuidados de Enfermería en el Niño y Adolescente con Alteraciones en Salud</li>
-      <li>Desarrollo de Proyectos en Enfermería</li>
-      <li>Pensamiento Crítico</li>
-    </ul>
-    <h3>Semestre 8</h3>
-    <ul>
-      <li>Cuidado Integral del Niño y Adulto</li>
-      <li>Seminario de Investigación en Enfermería</li>
-      <li>Integrador 2: Cuidado de Enfermería 2</li>
-      <li>Responsabilidad Social</li>
-    </ul>
-  </div>
+    const aprobados = JSON.parse(localStorage.getItem("ramos_aprobados") || "[]");
 
-  <div class="año">
-    <h2>Quinto Año</h2>
-    <h3>Semestre 9</h3>
-    <ul>
-      <li>Integrador 3: Gestión del Cuidado en Unidades de Enfermería</li>
-    </ul>
-    <h3>Semestre 10</h3>
-    <ul>
-      <li>Integrador 4: Gestión del Cuidado en Salud Familiar y Comunitaria</li>
-    </ul>
-  </div>
+    function renderMalla() {
+      const container = document.getElementById("malla-container");
+      container.innerHTML = "";
 
+      malla.forEach(({ semestre, ramos }) => {
+        const div = document.createElement("div");
+        div.className = "semestre";
+
+        const titulo = document.createElement("h2");
+        titulo.textContent = semestre;
+
+        const lista = document.createElement("div");
+        lista.className = "ramos";
+
+        ramos.forEach(ramo => {
+          const tarjeta = document.createElement("div");
+          tarjeta.className = "ramo";
+          tarjeta.textContent = ramo;
+
+          const requisitos = prerrequisitos[ramo] || [];
+          const bloqueado = requisitos.some(r => !aprobados.includes(r));
+          if (bloqueado) tarjeta.classList.add("bloqueado");
+          if (aprobados.includes(ramo)) tarjeta.classList.add("aprobado");
+
+          if (requisitos.length) {
+            const tooltip = document.createElement("div");
+            tooltip.className = "tooltip";
+            tooltip.textContent = "Prerrequisitos: " + requisitos.join(", ");
+            tarjeta.appendChild(tooltip);
+          }
+
+          tarjeta.onclick = () => {
+            if (bloqueado) return;
+            const index = aprobados.indexOf(ramo);
+            if (index >= 0) {
+              aprobados.splice(index, 1);
+            } else {
+              aprobados.push(ramo);
+            }
+            localStorage.setItem("ramos_aprobados", JSON.stringify(aprobados));
+            renderMalla();
+          };
+
+          lista.appendChild(tarjeta);
+        });
+
+        div.appendChild(titulo);
+        div.appendChild(lista);
+        container.appendChild(div);
+      });
+    }
+
+    renderMalla();
+  </script>
 </body>
 </html>
