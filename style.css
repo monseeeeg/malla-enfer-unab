@@ -1,0 +1,39 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background-color: #2980b9;
+  color: white;
+}
+
+select {
+  padding: 5px;
+}
+
+a {
+  color: #3498db;
+  text-decoration: none;
+}
